@@ -5,9 +5,9 @@ import {Svg, Image as ImageSvg} from 'react-native-svg';
 import MapView, { Marker,Callout} from "react-native-maps";
 import MarkerFetch from "../../components/mapView/markerFetch/MarkerFetch"
 import * as Location from 'expo-location';
-
-
-const MapViews = () =>{
+import Markers from "../mapView/marker/Marker"
+import Api from "../../api/Api.json"
+const MapViews = (props:Props) =>{
 
 
     type coordinates ={
@@ -37,6 +37,7 @@ const MapViews = () =>{
           
         })();
       }, []);
+console.log(Api);
 
     return(
         <View style={styles.container}>
@@ -53,14 +54,29 @@ const MapViews = () =>{
 				}}
 				provider='google'>
 				
-        <MarkerFetch/>
+        {/* <MarkerFetch/> */}
+        {Api.map(e => 
+        
+        
+    <Markers
+    latitude={e.latitude}
+    longitude={e.longitude}
+    name={e.name}
+    img={e.img}
+    
+    
+    />
+    
+    
+    
+)}
     </MapView>
 
     {/* INFO VIEW*/}
     {info &&(
     <View style={styles.infos}>
       <View style={styles.infosText}> 
-            <Text>Semir Hamidovic</Text>
+            <Text>{props.name}</Text>
             <Text>Fussball</Text>
             <Text>Sport</Text>
             <Text>32 Jahre</Text>
