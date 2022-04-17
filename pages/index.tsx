@@ -1,51 +1,31 @@
 // @generated: @expo/next-adapter@2.1.9
-import React, {useState,useEffect} from 'react'
-import { StyleSheet, Text, View ,Dimensions,Image, Button} from 'react-native'
-import Link from 'next/link'
-
-import MapView, { Marker,Callout} from "react-native-maps";
+import React, {useState,useEffect,createContext} from 'react'
+import { StyleSheet, View ,Dimensions} from 'react-native'
 import MapViews from "./components/mapView/MapViews"
-import * as Location from 'expo-location';
+
+interface user{
+  name:string
+}
+
+type settName = {
+  info: user[],
+  setInfo:React.Dispatch<React.SetStateAction<user[]>>
+}
+
+const userInfo = createContext<settName>({} as settName)
+
 export default function App() {
+const [ info, setInfo] = useState<user[]>([])
 
-type coordinates ={
-  // accuracy: number,
-  // altitude: number,
-  // altitudeAccuracy: number,
-  // heading: number,
-  longitude: number;
-  latitude: number
-  
-  
-}
-
-  const [location, setLocation] = useState<coordinates | undefined>();
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  const [ info, setInfo] = useState<boolean>(false)
+ 
 
 
-const test = () =>{
-  setInfo(!info)
-}
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location.coords);
-      console.log(location.coords);
-      
-    })();
-  }, []);
   return (
     <View style={styles.container}>
+      <userInfo.Provider value={{info,setInfo}}>
       <MapViews/>
-  
+      </userInfo.Provider>
      
     </View>
   )
@@ -79,3 +59,4 @@ const styles = StyleSheet.create({
   button:{width: 150, height: 50}
 });
 
+export {userInfo}

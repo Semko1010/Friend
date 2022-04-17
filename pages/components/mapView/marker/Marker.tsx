@@ -1,8 +1,8 @@
 import MapView, { Marker,Callout} from "react-native-maps";
 import { StyleSheet, Text, View ,Dimensions,Image, Button} from 'react-native'
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useContext} from 'react'
+import {userInfo} from "../../../index"
 
-import MapViews from "../MapViews"
 type coordinates ={
   data:{}
     longitude: number;
@@ -17,15 +17,20 @@ interface Props {
 }
 const Markers = (props:Props) => {
 
-    const [location, setLocation] = useState<coordinates | undefined>();
-    const [errorMsg, setErrorMsg] = useState<string>("");
-
+    const {info,setInfo} = useContext(userInfo)
     
+   const test = () =>{
+    console.log("test",info)
+    setInfo(props)
+     
+   }
+   
    
     return(
         <View>
            
         <Marker
+        onPress={test}
         coordinate={{
 	      latitude: props.latitude,
 		    longitude: props.longitude,

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useContext} from 'react'
 import { StyleSheet, Text, View ,Dimensions,Image, Button} from 'react-native'
 import Link from 'next/link'
 import {Svg, Image as ImageSvg} from 'react-native-svg';
@@ -7,7 +7,8 @@ import MarkerFetch from "../../components/mapView/markerFetch/MarkerFetch"
 import * as Location from 'expo-location';
 import Markers from "../mapView/marker/Marker"
 import Api from "../../api/Api.json"
-const MapViews = (props:Props) =>{
+import {userInfo} from "../../index"
+const MapViews = () =>{
 
 
     type coordinates ={
@@ -16,11 +17,12 @@ const MapViews = (props:Props) =>{
 } 
     const [location, setLocation] = useState<coordinates | undefined>();
     const [errorMsg, setErrorMsg] = useState<string>("");
-    const [ info, setInfo] = useState<boolean>(true)
+    const [ infos, setInfos] = useState<boolean>(true)
+    const {info,setInfo} = useContext(userInfo)
    
-
+   
     const test = () =>{
-        setInfo(!info)
+        setInfos(!info)
       }
 
       useEffect(() => {
@@ -37,7 +39,7 @@ const MapViews = (props:Props) =>{
           
         })();
       }, []);
-console.log(Api);
+
 
     return(
         <View style={styles.container}>
@@ -64,7 +66,6 @@ console.log(Api);
     name={e.name}
     img={e.img}
     
-    
     />
     
     
@@ -73,11 +74,11 @@ console.log(Api);
     </MapView>
 
     {/* INFO VIEW*/}
-    {info &&(
+    {infos &&(
     <View style={styles.infos}>
       <View style={styles.infosText}> 
-            <Text>{props.name}</Text>
-            <Text>Fussball</Text>
+            <Text>{info.name}</Text>
+            <Text>{info.latitude}</Text>
             <Text>Sport</Text>
             <Text>32 Jahre</Text>
             </View>
