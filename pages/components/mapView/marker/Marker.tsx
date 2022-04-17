@@ -10,10 +10,11 @@ type coordinates ={
 } 
 
 interface Props {
+  img:string
   latitude:number,
   longitude:number,
   name:string
-  img:string
+  
 }
 const Markers = (props:Props) => {
 

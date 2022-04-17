@@ -4,6 +4,9 @@ import { StyleSheet, View ,Dimensions} from 'react-native'
 import MapViews from "./components/mapView/MapViews"
 
 interface user{
+  img:string
+  latitude:number,
+  longitude:number,
   name:string
 }
 
