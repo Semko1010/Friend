@@ -8,10 +8,16 @@ import * as Location from 'expo-location';
 import Markers from "../mapView/marker/Marker"
 import Api from "../../api/Api.json"
 import {userInfo} from "../../index"
-import Axios from "axios"
 import axios from 'axios';
 const MapViews = () =>{
-
+  interface InterFaceInfos{
+    age:number,
+    img:string,
+    latitude: number,
+    longitude: number,
+    name:string
+    
+    }
 
     type coordinates ={
         longitude: number;
@@ -20,6 +26,7 @@ const MapViews = () =>{
     const [location, setLocation] = useState<coordinates | undefined>();
     const [errorMsg, setErrorMsg] = useState<string>("");
     const [ infos, setInfos] = useState<boolean>(true)
+    const [userInfos, setUserInfos] = useState<InterFaceInfos[]>([])
     const {info,setInfo} = useContext(userInfo)
     
    
@@ -33,7 +40,8 @@ async function testing() {
     
     const URL = "http://10.0.2.2:2020/api/friend/users/userInfo"
     const fetchInfos = await axios.get(URL)
-    console.log("Semir",fetchInfos.data);
+    const setInfosUsers = await setUserInfos(fetchInfos.data)
+    console.log("Semir",userInfos);
     
   } catch (error) {
     
@@ -42,7 +50,7 @@ async function testing() {
       useEffect(() => {
         
         (async () => {
-
+          
 
         let { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== 'granted') {
@@ -74,7 +82,9 @@ async function testing() {
 				provider='google'>
 				
         {/* <MarkerFetch/> */}
-        {Api.map(e => 
+
+        
+        {userInfos.map(e => 
         
         
     <Markers
@@ -82,21 +92,18 @@ async function testing() {
     longitude={e.longitude}
     name={e.name}
     img={e.img}
-    
+    age={e.age}
     />
     
-    
-    
-)}
+  )}
     </MapView>
 
     {/* INFO VIEW*/}
     {infos &&(
     <View style={styles.infos}>
       <View style={styles.infosText}> 
-            <Text>{info.name}</Text>
-            <Text>{info.latitude}</Text>
-            <Text>Sport</Text>
+            <Text>Name: {info.name}</Text>
+            <Text>Alter: {info.age}</Text>
             <Text>32 Jahre</Text>
             </View>
         <View style={styles.button}>

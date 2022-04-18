@@ -3,35 +3,31 @@ import { StyleSheet, Text, View ,Dimensions,Image, Button} from 'react-native'
 import React, {useState,useEffect,useContext} from 'react'
 import {userInfo} from "../../../index"
 
-type coordinates ={
-  data:{}
-    longitude: number;
-    latitude: number
-} 
 
 interface Props {
   img:string
   latitude:number,
   longitude:number,
   name:string
-  
+  age:number
 }
 const Markers = (props:Props) => {
 
     const {info,setInfo} = useContext(userInfo)
     
-   const test = () =>{
-    console.log("test",info)
+   const eachInfoOfUser = () =>{
+    
     setInfo(props)
      
    }
    
+   console.log("semko",props.longitude);
    
     return(
         <View>
            
         <Marker
-        onPress={test}
+        onPress={eachInfoOfUser}
         coordinate={{
 	      latitude: props.latitude,
 		    longitude: props.longitude,
