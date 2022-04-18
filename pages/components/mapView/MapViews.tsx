@@ -8,6 +8,8 @@ import * as Location from 'expo-location';
 import Markers from "../mapView/marker/Marker"
 import Api from "../../api/Api.json"
 import {userInfo} from "../../index"
+import Axios from "axios"
+import axios from 'axios';
 const MapViews = () =>{
 
 
@@ -19,15 +21,30 @@ const MapViews = () =>{
     const [errorMsg, setErrorMsg] = useState<string>("");
     const [ infos, setInfos] = useState<boolean>(true)
     const {info,setInfo} = useContext(userInfo)
-   
+    
    
     const test = () =>{
         setInfos(!info)
       }
-
+async function testing() {
+  
+  
+  try {
+    
+    const URL = "http://10.0.2.2:2020/api/friend/users/userInfo"
+    const fetchInfos = await axios.get(URL)
+    console.log("Semir",fetchInfos.data);
+    
+  } catch (error) {
+    
+  }
+}
       useEffect(() => {
+        
         (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
+
+
+        let { status } = await Location.requestForegroundPermissionsAsync();
           if (status !== 'granted') {
             setErrorMsg('Permission to access location was denied');
             return;
@@ -35,7 +52,7 @@ const MapViews = () =>{
     
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location.coords);
-          console.log(location.coords);
+          
           
         })();
       }, []);
@@ -85,7 +102,7 @@ const MapViews = () =>{
         <View style={styles.button}>
             <Button 
       
-            onPress={() => alert("hex")}
+            onPress={testing}
             title="Nachricht senden"
             />
         </View>

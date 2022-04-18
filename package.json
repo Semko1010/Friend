@@ -13,6 +13,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "expo": "^44.0.0",
     "expo-location": "~14.0.1",
     "next": "latest",
